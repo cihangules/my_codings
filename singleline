@@ -1,0 +1,97 @@
+#!/bin/bash
+
+#MAKE DIRECTORIES
+
+BASEDIR=$PWD
+
+rm -r ../yayin/
+mkdir ../yayin/
+mkdir ../yayin/blog/
+mkdir ../yayin/scripts
+mkdir ../yayin/images
+
+# COPY IMAGES
+
+cp images/* ../yayin/images/
+
+
+# DECLARE VARIABLES, COUNT FILES
+
+declare -i ZERONUMBER=0
+declare -i FILECOUNTHTML=$(ls -l | egrep '\.html$' | wc -l)
+declare -i FILECOUNTCSS=$(ls -l | egrep '\.css$' | wc -l)
+declare -i FILECOUNTJAVASCRIPT=$(ls -l | egrep '\.js$' | wc -l)
+declare -i FILECOUNTBLOG=$(ls blog -l | egrep '\.html$' | wc -l)
+declare -i FILECOUNTJAVASCRIPTDIR=$(ls scripts -l | egrep '\.js$' | wc -l)
+
+
+
+# COPY HTML FILES 
+
+if [ $FILECOUNTHTML -gt $ZERONUMBER ]
+then
+	FILESHTML=$BASEDIR/*.html
+	for f in $FILESHTML
+	do
+		b=$(basename $f)
+		echo 'Copying' $b
+		touch ../yayin/$b
+		cat $f | tr -d '\r\n' > ../yayin/$b
+	done
+fi
+
+# COPY CSS FILES
+
+if [ $FILECOUNTCSS -gt $ZERONUMBER ]
+then
+	FILESCSS=$BASEDIR/*.css
+	for f in $FILESCSS
+	do
+		b=$(basename $f)
+		echo 'Copying' $b
+		touch ../yayin/$b
+		cat $f | tr -d '\r\n' > ../yayin/$b
+	done
+fi
+
+# COPY JAVASCRIPT FILES ON THE MAIN DIRECTORY
+
+if [ $FILECOUNTJAVASCRIPT -gt $ZERONUMBER ]
+then
+	FILESJAVASCRIPT=$BASEDIR/*.js
+	for f in $FILESJAVASCRIPT
+	do
+		b=$(basename $f)
+		echo 'Copying' $b
+		touch ../yayin/$b
+		cat $f | tr -d '\r\n' > ../yayin/$b
+	done
+fi
+
+# COPY BLOG ENTRIES
+
+if [ $FILECOUNTBLOG -gt $ZERONUMBER ]
+then
+	FILESBLOG=$BASEDIR/blog/*.html
+	for f in $FILESBLOG
+	do
+		b=$(basename $f)
+		echo 'Copying' $b
+		touch ../yayin/blog/$b
+		cat $f | tr -d '\r\n' > ../yayin/blog/$b
+	done
+fi
+
+# COPY JAVASCRIPT FILES ON THE SCRIPTS DIRECTORY
+
+if [ $FILECOUNTJAVASCRIPTDIR -gt $ZERONUMBER ]
+then
+	FILESJAVASCRIPTDIR=$BASEDIR/scripts/*.js
+	for f in $FILESJAVASCRIPTDIR
+	do
+		b=$(basename $f)
+		echo 'Copying' $b
+		touch ../yayin/scripts/$b
+		cat $f | tr -d '\r\n' > ../yayin/scripts/$b
+	done
+fi
